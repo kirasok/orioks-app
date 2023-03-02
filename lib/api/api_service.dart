@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:orioks/api/api_constants.dart';
 import 'package:orioks/api/user_agent_client.dart';
+import 'package:orioks/datamodel/discipline.dart';
+import 'package:orioks/datamodel/group.dart';
+import 'package:orioks/datamodel/schedule.dart';
+import 'package:orioks/datamodel/student.dart';
+import 'package:orioks/datamodel/timetable.dart';
 import 'package:orioks/datamodel/token.dart';
 
 class ApiService {
@@ -35,7 +40,7 @@ class ApiService {
     }
   }
 
-  static Future<void> fetchSchedule() async {
+  static Future<Schedule> fetchSchedule() async {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
@@ -51,6 +56,7 @@ class ApiService {
       logger.d(response.body);
       logger.close();
       if (response.statusCode == 200) {
+        return Schedule.fromJson(jsonDecode(response.body));
       } else {
         throw Exception(
             "Failed to fetch schedule, status code: ${response.statusCode}, response body: ${response.body}");
@@ -60,7 +66,7 @@ class ApiService {
     }
   }
 
-  static Future<void> fetchGroupList() async {
+  static Future<List<Group>> fetchGroupList() async {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
@@ -76,6 +82,10 @@ class ApiService {
       );
       logger.d(response.body);
       if (response.statusCode == 200) {
+        final List<dynamic> dynamicList = jsonDecode(response.body);
+        final List<Group> groups =
+            List.from(dynamicList.map((e) => Group.fromJson(e)));
+        return groups;
       } else {
         throw Exception(
             "Failed to fetch group list, status code: ${response.statusCode}, response body: ${response.body}");
@@ -85,7 +95,7 @@ class ApiService {
     }
   }
 
-  static Future<void> fetchTimetable() async {
+  static Future<Timetable> fetchTimetable() async {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
@@ -101,6 +111,7 @@ class ApiService {
       );
       logger.d(response.body);
       if (response.statusCode == 200) {
+        return Timetable.fromJson(jsonDecode(response.body));
       } else {
         throw Exception(
             "Failed to fetch timetable, status code: ${response.statusCode}, response body: ${response.body}");
@@ -135,7 +146,7 @@ class ApiService {
     }
   }
 
-  static Future<void> fetchStudent() async {
+  static Future<Student> fetchStudent() async {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
@@ -150,6 +161,7 @@ class ApiService {
       );
       logger.d(response.body);
       if (response.statusCode == 200) {
+        return Student.fromJson(jsonDecode(response.body));
       } else {
         throw Exception(
             "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
@@ -159,7 +171,7 @@ class ApiService {
     }
   }
 
-  static Future<void> fetchDisciplines() async {
+  static Future<List<Discipline>> fetchDisciplines() async {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
@@ -175,6 +187,10 @@ class ApiService {
       );
       logger.d(response.body);
       if (response.statusCode == 200) {
+        final List<dynamic> dynamicList = jsonDecode(response.body);
+        final List<Discipline> disciplines = List<Discipline>.from(
+            dynamicList.map((e) => Discipline.fromJson(e)));
+        return disciplines;
       } else {
         throw Exception(
             "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
@@ -184,6 +200,7 @@ class ApiService {
     }
   }
 
+// TODO: ask someone who has academic debts to test
   static Future<void> fetchAcademicDepts() async {
     final token = await TokenRepository.read();
     if (token != null) {
