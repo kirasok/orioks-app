@@ -48,10 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(_token),
             ElevatedButton(
               onPressed: () async {
-                return;
-                Token token = await ApiService.fetchToken(
-                    ApiConstants.username, ApiConstants.password);
-                _token = token.token;
+                _token = (await TokenRepository.read())?.token ?? "Empty";
                 setState(() {});
               },
               child: const Text("Fetch token!"),
