@@ -10,6 +10,8 @@ import 'package:orioks/datamodel/token.dart';
 // TODO: push notifications api https://gitlab.com/orioks/student-api/-/blob/master/docs/student/pushes.rst
 // TODO: allow to view and delete tokens https://gitlab.com/orioks/student-api/-/blob/master/docs/student/tokens.rst
 
+// TODO: schedule of group datamodel
+
 void main() {
   runApp(const MyApp());
   ApiService.client.close();
