@@ -150,7 +150,7 @@ class ApiService {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
-      logger.d("Trying to get group list");
+      logger.d("Trying to get student");
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.studentEndpoint);
       final response = await client.get(
         url,
@@ -164,7 +164,7 @@ class ApiService {
         return Student.fromJson(jsonDecode(response.body));
       } else {
         throw Exception(
-            "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
+            "Failed to fetch student, status code: ${response.statusCode}, response body: ${response.body}");
       }
     } else {
       throw Exception("Token is null");
@@ -175,7 +175,7 @@ class ApiService {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
-      logger.d("Trying to get group list");
+      logger.d("Trying to get disciplines");
       var url =
           Uri.parse(ApiConstants.baseUrl + ApiConstants.disciplinesEndpoint);
       final response = await client.get(
@@ -193,7 +193,7 @@ class ApiService {
         return disciplines;
       } else {
         throw Exception(
-            "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
+            "Failed to fetch disciplines, status code: ${response.statusCode}, response body: ${response.body}");
       }
     } else {
       throw Exception("Token is null");
@@ -205,7 +205,7 @@ class ApiService {
     final token = await TokenRepository.read();
     if (token != null) {
       var logger = Logger();
-      logger.d("Trying to get group list");
+      logger.d("Trying to get academic debts");
       var url =
           Uri.parse(ApiConstants.baseUrl + ApiConstants.academicDebtsEndpoint);
       final response = await client.get(
@@ -219,7 +219,7 @@ class ApiService {
       if (response.statusCode == 200) {
       } else {
         throw Exception(
-            "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
+            "Failed to fetch academic depts, status code: ${response.statusCode}, response body: ${response.body}");
       }
     } else {
       throw Exception("Token is null");
