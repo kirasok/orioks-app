@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orioks/api/api_constants.dart';
-import 'package:orioks/api/api_service.dart';
-import 'package:orioks/datamodel/token.dart';
+import 'package:orioks/data/repository/token_repository.dart';
 
 // TODO: fetch schedule of group using id of student's group https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
 // TODO: check if it is neccessary to update schedule https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
@@ -11,10 +9,10 @@ import 'package:orioks/datamodel/token.dart';
 // TODO: allow to view and delete tokens https://gitlab.com/orioks/student-api/-/blob/master/docs/student/tokens.rst
 
 // TODO: schedule of group datamodel
+// TODO: find a way to store data
 
 void main() {
   runApp(const MyApp());
-  ApiService.client.close();
 }
 
 class MyApp extends StatelessWidget {
@@ -57,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(_token),
             ElevatedButton(
               onPressed: () async {
-                _token = (await TokenRepository.read())?.token ?? "Empty";
+                _token = (await TokenRepository().get()).token;
                 setState(() {});
               },
               child: const Text("Fetch token!"),
