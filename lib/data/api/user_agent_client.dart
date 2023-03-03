@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:orioks/api/api_constants.dart';
+
+import 'api_constants.dart';
 
 class UserAgentClient extends http.BaseClient {
   final userAgent = ApiConstants.userAgent;
