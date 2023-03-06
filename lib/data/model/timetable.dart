@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Timetable {
+  Map<int, List<TimeOfDay>> pairs;
+
   Timetable({
-    required Map<int, List<TimeOfDay>> pairs,
+    required this.pairs,
   });
 
   static fromJson(Map<String, dynamic> json) => json.map(

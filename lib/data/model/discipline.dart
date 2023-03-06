@@ -1,13 +1,22 @@
 class Discipline {
+  String controlForm;
+  double currentGrade;
+  String departament;
+  DateTime examDate;
+  int id;
+  double maxGrade;
+  String name;
+  List<String> teachers;
+
   Discipline({
-    required String controlForm,
-    required double currentGrade,
-    required String departament,
-    required DateTime examDate,
-    required int id,
-    required double maxGrade,
-    required String name,
-    required List<String> teachers,
+    required this.controlForm,
+    required this.currentGrade,
+    required this.departament,
+    required this.examDate,
+    required this.id,
+    required this.maxGrade,
+    required this.name,
+    required this.teachers,
   });
   static Discipline fromJson(Map<String, dynamic> json) => Discipline(
         controlForm: json["control_form"],
