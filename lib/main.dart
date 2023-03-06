@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+// TODO: fetch schedule of group using id of student's group https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
+// TODO: check if it is neccessary to update schedule https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
+// TODO: fetch discipline's events using id of discipline https://gitlab.com/orioks/student-api/-/blob/master/docs/student/events.rst
+// TODO: fetch resits using id of discipline https://gitlab.com/orioks/student-api/-/blob/master/docs/student/resits.rst
+// TODO: push notifications api https://gitlab.com/orioks/student-api/-/blob/master/docs/student/pushes.rst
+// TODO: allow to view and delete tokens https://gitlab.com/orioks/student-api/-/blob/master/docs/student/tokens.rst
+
+// TODO: schedule of group datamodel
+// TODO: find a way to store data
+
 void main() {
   runApp(const MyApp());
 }
@@ -30,54 +40,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  String _text = "Push the button!";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _text,
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: const Center(
+        child: Text("UI is in development"),
       ),
     );
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      if (_counter >= 31) {
-        _text = "I told you to stop, fucker!";
-        return;
-      }
-      _counter++;
-      if (_counter >= 30) {
-        _text = "Oh! I can't take more! Enough!";
-      } else if (_counter >= 20) {
-        _text = "Eveeeen moooore!!!";
-      } else if (_counter >= 10) {
-        _text = "Push it even mooore!";
-      } else if (_counter >= 3) {
-        _text = "Yeah, push the button more!";
-      }
-    });
   }
 }
