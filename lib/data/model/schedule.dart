@@ -1,9 +1,14 @@
 class Schedule {
+  DateTime semesterStart;
+  DateTime sessionStart;
+  DateTime sessionEnd;
+  DateTime nextSemesterStart;
+
   Schedule({
-    required DateTime semesterStart,
-    required DateTime sessionStart,
-    required DateTime sessionEnd,
-    required DateTime nextSemesterStart,
+    required this.semesterStart,
+    required this.sessionStart,
+    required this.sessionEnd,
+    required this.nextSemesterStart,
   });
   static Schedule fromJson(Map<String, dynamic> json) => Schedule(
         semesterStart: DateTime.parse(json['semester_start']),

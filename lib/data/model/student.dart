@@ -1,14 +1,24 @@
 class Student {
+  int course;
+  String department;
+  String fullName;
+  String group;
+  int recordBookId;
+  int semester;
+  String studyDirection;
+  String studyProfile;
+  int year;
+
   Student({
-    required int course,
-    required String department,
-    required String fullName,
-    required String group,
-    required int recordBookId,
-    required int semester,
-    required String studyDirection,
-    required String studyProfile,
-    required int year,
+    required this.course,
+    required this.department,
+    required this.fullName,
+    required this.group,
+    required this.recordBookId,
+    required this.semester,
+    required this.studyDirection,
+    required this.studyProfile,
+    required this.year,
   });
   static Student fromJson(Map<String, dynamic> json) => Student(
       course: json['course'],
