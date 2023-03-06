@@ -15,14 +15,12 @@ class TokenRepository {
 
   factory TokenRepository() => _instance;
 
-  Future<Token> get() async {
+  Future<Token> get({String? login, String? password}) async {
     String? token = await _storage.read(key: _key);
     if (token != null) {
       return Token(token);
     } else {
-      // TODO: make user enter login and password
-      var login = "";
-      var password = "";
+      // TODO: ask user to provide login and password if they are null
       final String credentials = '$login:$password';
       var stringToBase64 = utf8.fuse(base64);
       var encodedCredentials = stringToBase64.encode(credentials);
