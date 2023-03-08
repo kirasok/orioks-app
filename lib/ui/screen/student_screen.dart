@@ -42,7 +42,7 @@ class _StudentScreenState extends State<StudentScreen> {
         } else if (state is StudentLoading) {
           return const Center(child: CircularProgressIndicator.adaptive());
         } else if (state is StudentFailed) {
-          return Text(state.exception.toString());
+          return Text(state.e.toString());
         } else {
           return const Text("Can't load info!");
         }
