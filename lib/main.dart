@@ -1,4 +1,8 @@
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
+
+import 'ui/app.dart';
 
 // TODO: fetch schedule of group using id of student's group https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
 // TODO: check if it is neccessary to update schedule https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
@@ -10,45 +14,12 @@ import 'package:flutter/material.dart';
 // TODO: schedule of group datamodel
 // TODO: find a way to store data
 
+Future setDesktopWindow() async {
+  await DesktopWindow.setMinWindowSize(const Size(400, 400));
+}
+
 void main() {
+  if (UniversalPlatform.isDesktop) setDesktopWindow();
+
   runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Orioks',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Orioks'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  const MyHomePage({super.key, required this.title});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const Center(
-        child: Text("UI is in development"),
-      ),
-    );
-  }
 }
