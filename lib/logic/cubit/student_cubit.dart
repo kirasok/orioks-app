@@ -28,17 +28,22 @@ class StudentCubit extends Cubit<StudentState> {
 
   StudentCubit({required this.internetCubit}) : super(StudentLoading()) {
     try {
-      streamSubscription = internetCubit.stream.listen((internetState) {
-        if (internetState is InternetDisconnected) {
-          throw Exception("No internet connection!");
-        } else if (internetState is InternetConnected) {
-          StudentRepository().get().then((value) => emit(StudentLoaded(value)));
-        }
-      });
+      if (internetCubit.state is InternetConnected) {
+        loadStudent();
+      } else {
+        streamSubscription = internetCubit.stream.listen((internetState) {
+          if (internetState is InternetConnected && state is! StudentLoaded) {
+            loadStudent();
+          }
+        });
+      }
     } catch (e) {
       emit(StudentFailed(e));
     }
   }
+
+  Future<void> loadStudent() =>
+      StudentRepository().get().then((value) => emit(StudentLoaded(value)));
 
   @override
   Future<void> close() {
