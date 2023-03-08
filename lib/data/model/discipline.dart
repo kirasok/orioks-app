@@ -1,10 +1,10 @@
 class Discipline {
   String controlForm;
-  double currentGrade;
+  num currentGrade;
   String departament;
-  DateTime examDate;
+  String examDate;
   int id;
-  double maxGrade;
+  num maxGrade;
   String name;
   List<String> teachers;
 
@@ -20,12 +20,12 @@ class Discipline {
   });
   static Discipline fromJson(Map<String, dynamic> json) => Discipline(
         controlForm: json["control_form"],
-        currentGrade: json["current_grade"],
+        currentGrade: json["current_grade"] as num,
         departament: json["department"],
-        examDate: DateTime.parse(json["exam_date"]),
+        examDate: json["exam_date"],
         id: json["id"],
-        maxGrade: json["max_grade"],
+        maxGrade: json["max_grade"] as num,
         name: json["name"],
-        teachers: json["teachers"],
+        teachers: List<String>.from(json["teachers"] as List<dynamic>),
       );
 }
