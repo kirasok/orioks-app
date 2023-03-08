@@ -1,6 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orioks/logic/cubit/internet_cubit.dart';
 import 'package:orioks/logic/cubit/navigation_cubit.dart';
+import 'package:orioks/logic/cubit/student_cubit.dart';
 import 'package:orioks/ui/screen/schedule_screen.dart';
 import 'package:orioks/ui/screen/student_screen.dart';
 import 'package:orioks/ui/screen/subjects_screen.dart';
@@ -15,8 +18,15 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NavigationCubit>(
-      create: (context) => NavigationCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => NavigationCubit()),
+        BlocProvider(
+            create: (context) => InternetCubit(connectivity: Connectivity())),
+        BlocProvider(
+            create: (context) => StudentCubit(
+                internetCubit: BlocProvider.of<InternetCubit>(context))),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Orioks Unofficial"),
