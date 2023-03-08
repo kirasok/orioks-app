@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:orioks/data/model/student.dart';
 import 'package:orioks/data/repository/student_repository.dart';
-import 'package:orioks/logic/cubit/internet_cubit.dart';
+
+import 'internet_cubit.dart';
 
 abstract class StudentState {}
 
@@ -16,9 +17,9 @@ class StudentLoaded extends StudentState {
 class StudentLoading extends StudentState {}
 
 class StudentFailed extends StudentState {
-  Object exception;
-  StudentFailed(this.exception) {
-    Logger().e(exception);
+  final Object e;
+  StudentFailed(this.e) {
+    Logger().e(e);
   }
 }
 

@@ -20,16 +20,14 @@ class Student {
     required this.studyProfile,
     required this.year,
   });
-  static Student fromJson(Map<String, dynamic> json) {
-    return Student(
-        course: json['course'],
-        department: json['department'],
-        fullName: json['full_name'],
-        group: json['group'],
-        recordBookId: json['record_book_id'],
-        semester: json['semester'],
-        studyDirection: json['study_direction'],
-        studyProfile: json['study_profile'],
-        year: json['year']);
-  }
+  static Student fromJson(Map<String, dynamic> json) => Student(
+      course: json['course'],
+      department: json['department'],
+      fullName: json['full_name'],
+      group: json['group'],
+      recordBookId: json['record_book_id'],
+      semester: json['semester'],
+      studyDirection: json['study_direction'],
+      studyProfile: json['study_profile'],
+      year: json['year']);
 }

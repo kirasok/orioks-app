@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:orioks/ui/colors.dart';
 
 import 'screen/root_screen.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: light ??
               ColorScheme.fromSeed(
-                seedColor: const Color(0xff008cba),
+                seedColor: seedLight,
                 brightness: Brightness.light,
               ),
           useMaterial3: true,
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeData(
           colorScheme: dark ??
               ColorScheme.fromSeed(
-                seedColor: const Color(0xff007095),
+                seedColor: seedDark,
                 brightness: Brightness.dark,
               ),
           useMaterial3: true,
