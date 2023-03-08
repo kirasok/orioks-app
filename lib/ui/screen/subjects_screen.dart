@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orioks/logic/cubit/subjects_cubit.dart';
+import 'package:orioks/ui/widget/discipline_tile.dart';
 
 class SubjectsScreen extends StatefulWidget {
   const SubjectsScreen({super.key});
@@ -10,6 +13,20 @@ class SubjectsScreen extends StatefulWidget {
 class _SubjectsScreenState extends State<SubjectsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Subjects"));
+    return BlocBuilder<SubjectsCubit, SubjectsState>(builder: (context, state) {
+      if (state is SubjectsLoaded) {
+        return ListView.builder(
+          itemCount: state.subjects.length,
+          itemBuilder: (context, index) =>
+              DisciplineTile(state.subjects[index]),
+        );
+      } else if (state is SubjectsLoading) {
+        return const Center(child: CircularProgressIndicator.adaptive());
+      } else if (state is SubjectsFailed) {
+        return Text(state.e.toString());
+      } else {
+        return const Text("Can't load info");
+      }
+    });
   }
 }
