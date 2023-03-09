@@ -36,23 +36,26 @@ class _RootScreenState extends State<RootScreen> {
           title: const Text("Orioks Unofficial"),
         ),
         bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
-          builder: (context, state) => BottomNavigationBar(
-            currentIndex: state.index,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.schedule),
+          builder: (context, state) => NavigationBar(
+            selectedIndex: state.index,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.schedule_outlined),
+                selectedIcon: Icon(Icons.schedule),
                 label: 'Schedule',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.subject),
+              NavigationDestination(
+                icon: Icon(Icons.subject_outlined),
+                selectedIcon: Icon(Icons.subject),
                 label: 'Subjects',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+              NavigationDestination(
+                icon: Icon(Icons.person_outlined),
+                selectedIcon: Icon(Icons.person),
                 label: 'Student',
               ),
             ],
-            onTap: (index) {
+            onDestinationSelected: (index) {
               switch (index) {
                 case 0:
                   BlocProvider.of<NavigationCubit>(context)
