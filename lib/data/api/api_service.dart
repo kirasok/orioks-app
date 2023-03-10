@@ -97,12 +97,11 @@ class ApiService {
     }
   }
 
-  // TODO: advanced api
-  Future<void> fetchScheduleOfGroup() async {
+  Future<String> fetchScheduleOfGroup(int groupId) async {
     final token = await TokenRepository().get();
-    _logger.d("Trying to get group list");
+    _logger.d("Trying to get schedule of group");
     var url = Uri.parse(
-        ApiConstants.baseUrl + ApiConstants.groupListEndpoint + "/1620");
+        "${ApiConstants.baseUrl}${ApiConstants.groupListEndpoint}/$groupId");
     final response = await _client.get(
       url,
       headers: {
@@ -112,6 +111,7 @@ class ApiService {
     );
     _logger.d(response.body);
     if (response.statusCode == 200) {
+      return response.body;
     } else {
       throw Exception(
           "Failed to fetch schedule of group, status code: ${response.statusCode}, response body: ${response.body}");
