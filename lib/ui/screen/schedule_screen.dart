@@ -19,7 +19,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             Text(state.timetable.pairs.toString()),
             Text(state.schedule.semesterStart.toString()),
             Text(state.schedule.sessionEnd.toString()),
-            Text(state.scheduleOfGroup.pairs[0].name),
+            Column(
+              children: List<Widget>.from(state
+                  .getScheduleOnDay(DateTime.now())
+                  .entries
+                  .map((e) => Text("${e.key} ${e.value.name}"))),
+            )
           ],
         );
       } else if (state is ScheduleLoading) {

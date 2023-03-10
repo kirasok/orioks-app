@@ -24,6 +24,17 @@ class ScheduleLoaded extends ScheduleState {
       {required this.timetable,
       required this.schedule,
       required this.scheduleOfGroup});
+
+  Map<num, ScheduleItem> getScheduleOnDay(DateTime now) {
+    final difference = now.difference(schedule.sessionStart ?? DateTime.now());
+    int week = difference.inDays ~/
+        7 %
+        scheduleOfGroup.pairs.first.weekRecurrence.toInt();
+    return Map.fromIterable(
+        scheduleOfGroup.pairs.where((element) =>
+            element.week == week && element.day == now.weekday - 1),
+        key: (element) => (element as ScheduleItem).pair);
+  }
 }
 
 class ScheduleLoading extends ScheduleState {}

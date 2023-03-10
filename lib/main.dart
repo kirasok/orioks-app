@@ -13,6 +13,8 @@ import 'ui/app.dart';
 // TODO: find a way to store data
 
 // TODO: clean stream handling in cubits
+// TODO: refactor int, double, num
+// TODO: ensure consistency of variable's names
 
 Future setDesktopWindow() async {
   await DesktopWindow.setMinWindowSize(const Size(400, 400));
