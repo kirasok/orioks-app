@@ -1,8 +1,8 @@
 class Schedule {
-  DateTime semesterStart;
-  DateTime sessionStart;
-  DateTime sessionEnd;
-  DateTime nextSemesterStart;
+  DateTime? semesterStart;
+  DateTime? sessionStart;
+  DateTime? sessionEnd;
+  DateTime? nextSemesterStart;
 
   Schedule({
     required this.semesterStart,
@@ -11,9 +11,9 @@ class Schedule {
     required this.nextSemesterStart,
   });
   static Schedule fromJson(Map<String, dynamic> json) => Schedule(
-        semesterStart: DateTime.parse(json['semester_start']),
-        sessionStart: DateTime.parse(json["session_start"]),
-        sessionEnd: DateTime.parse(json["session_end"]),
-        nextSemesterStart: DateTime.parse(json["next_semester_start"]),
+        semesterStart: DateTime.tryParse(json['semester_start']),
+        sessionStart: DateTime.tryParse(json["session_start"]),
+        sessionEnd: DateTime.tryParse(json["session_end"]),
+        nextSemesterStart: DateTime.tryParse(json["next_semester_start"]),
       );
 }
