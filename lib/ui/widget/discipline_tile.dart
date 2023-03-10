@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orioks/data/model/discipline.dart';
+import 'package:orioks/logic/cubit/events_cubit.dart';
 import 'package:orioks/ui/colors.dart';
+
+import '../screen/events_screen.dart';
 
 class DisciplineTile extends StatelessWidget {
   final Discipline discipline;
-  final VoidCallback onTap;
 
-  const DisciplineTile(
-      {super.key, required this.discipline, required this.onTap});
+  const DisciplineTile({super.key, required this.discipline});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,19 @@ class DisciplineTile extends StatelessWidget {
       ),
       title: Text(discipline.name),
       subtitle: Text(discipline.controlForm),
-      onTap: onTap,
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+              value: BlocProvider.of<EventsCubit>(context),
+              child: EventsScreen(
+                disciplineName: discipline.name,
+                disciplineId: discipline.id,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
