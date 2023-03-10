@@ -22,7 +22,8 @@ class DisciplineTile extends StatelessWidget {
         width: 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: gradeToColor(discipline.currentGrade, discipline.maxGrade),
+          color: gradeToColor(
+              discipline.currentGrade, discipline.maxGrade, context),
         ),
         child: Center(
           child: Text(

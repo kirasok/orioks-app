@@ -20,7 +20,7 @@ class Grade extends StatelessWidget {
       width: 48,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
-        color: gradeToColor(current, max),
+        color: gradeToColor(current, max, context),
       ),
       child: Center(
         child: Text(
