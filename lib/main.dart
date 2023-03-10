@@ -15,6 +15,8 @@ import 'ui/app.dart';
 // TODO: refactor int, double, num
 // TODO: ensure consistency of variable's names
 
+// TODO: make icon for an app
+
 Future setDesktopWindow() async {
   await DesktopWindow.setMinWindowSize(const Size(400, 400));
 }
