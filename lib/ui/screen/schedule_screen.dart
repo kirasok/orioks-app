@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orioks/data/model/schedule_of_group.dart';
 import 'package:orioks/logic/cubit/schedule_cubit.dart';
+import 'package:orioks/ui/widget/schedule_title.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -14,18 +16,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<ScheduleCubit, ScheduleState>(builder: (context, state) {
       if (state is ScheduleLoaded) {
-        return Column(
-          children: [
-            Text(state.timetable.pairs.toString()),
-            Text(state.schedule.semesterStart.toString()),
-            Text(state.schedule.sessionEnd.toString()),
-            Column(
-              children: List<Widget>.from(state
-                  .getScheduleOnDay(DateTime.now())
-                  .entries
-                  .map((e) => Text("${e.key} ${e.value.name}"))),
-            )
-          ],
+        var schedule = List<ScheduleItem>.from(
+            state.getScheduleOnDay(DateTime.now()).values);
+        schedule.sort((a, b) => a.pair.compareTo(b.pair));
+        return ListView.builder(
+          itemBuilder: (context, index) => ScheduleTile(
+            timetable: state.timetable,
+            pair: schedule[index],
+          ),
+          itemCount: schedule.length,
         );
       } else if (state is ScheduleLoading) {
         return const Center(child: CircularProgressIndicator.adaptive());
