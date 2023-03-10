@@ -15,10 +15,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScheduleCubit, ScheduleState>(builder: (context, state) {
+      // TODO: handle double pairs
       if (state is ScheduleLoaded) {
-        var schedule = List<ScheduleItem>.from(
-            state.getScheduleOnDay(DateTime.now()).values);
-        schedule.sort((a, b) => a.pair.compareTo(b.pair));
+        var schedule =
+            List<ScheduleItem>.from(state.getScheduleOnDay(DateTime.now()));
         return ListView.builder(
           itemBuilder: (context, index) => ScheduleTile(
             timetable: state.timetable,

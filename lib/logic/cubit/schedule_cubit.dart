@@ -25,15 +25,15 @@ class ScheduleLoaded extends ScheduleState {
       required this.schedule,
       required this.scheduleOfGroup});
 
-  Map<int, ScheduleItem> getScheduleOnDay(DateTime now) {
+  List<ScheduleItem> getScheduleOnDay(DateTime now) {
     final difference = now.difference(schedule.sessionStart ?? DateTime.now());
     int week = difference.inDays ~/
         7 %
         scheduleOfGroup.pairs.first.weekRecurrence.toInt();
-    return Map.fromIterable(
-        scheduleOfGroup.pairs.where((element) =>
-            element.week == week && element.day == now.weekday - 1),
-        key: (element) => (element as ScheduleItem).pair.toInt());
+    List<ScheduleItem> list = List.from(scheduleOfGroup.pairs.where(
+        (element) => element.week == week && element.day == now.weekday - 1));
+    list.sort((a, b) => a.pair.compareTo(b.pair));
+    return list;
   }
 }
 
