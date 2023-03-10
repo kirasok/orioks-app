@@ -28,6 +28,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                   builder: (_) => BlocProvider.value(
                     value: BlocProvider.of<InternetCubit>(context),
                     child: EventsScreen(
+                      disciplineName: state.subjects[index].name,
                       disciplineId: state.subjects[index].id,
                     ),
                   ),
