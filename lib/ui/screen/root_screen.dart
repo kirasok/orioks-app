@@ -37,7 +37,10 @@ class _RootScreenState extends State<RootScreen> {
                 internetCubit: BlocProvider.of<InternetCubit>(context))),
         BlocProvider(
             create: (context) => ScheduleCubit(
-                internetCubit: BlocProvider.of<InternetCubit>(context))),
+                  internetCubit: BlocProvider.of<InternetCubit>(context),
+                  studentCubit: BlocProvider.of<StudentCubit>(context),
+                  groupsCubit: BlocProvider.of<GroupsCubit>(context),
+                )),
       ],
       child: Scaffold(
         appBar: AppBar(

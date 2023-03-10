@@ -19,6 +19,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             Text(state.timetable.pairs.toString()),
             Text(state.schedule.semesterStart.toString()),
             Text(state.schedule.sessionEnd.toString()),
+            Text(state.scheduleOfGroup.pairs[0].name),
           ],
         );
       } else if (state is ScheduleLoading) {
