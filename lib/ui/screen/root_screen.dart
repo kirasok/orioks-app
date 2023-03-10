@@ -7,9 +7,11 @@ import 'package:orioks/logic/cubit/navigation_cubit.dart';
 import 'package:orioks/logic/cubit/schedule_cubit.dart';
 import 'package:orioks/logic/cubit/student_cubit.dart';
 import 'package:orioks/logic/cubit/subjects_cubit.dart';
+import 'package:orioks/ui/screen/about_screen.dart';
 import 'package:orioks/ui/screen/schedule_screen.dart';
 import 'package:orioks/ui/screen/student_screen.dart';
 import 'package:orioks/ui/screen/subjects_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -45,6 +47,13 @@ class _RootScreenState extends State<RootScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Orioks Unofficial"),
+          actions: [
+            IconButton(
+              onPressed: () async =>
+                  showAboutScreen(context, await PackageInfo.fromPlatform()),
+              icon: const Icon(Icons.info_outline),
+            )
+          ],
         ),
         bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) => NavigationBar(

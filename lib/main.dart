@@ -20,6 +20,8 @@ Future setDesktopWindow() async {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (UniversalPlatform.isDesktop) setDesktopWindow();
 
   runApp(const MyApp());
