@@ -159,6 +159,27 @@ class ApiService {
     }
   }
 
+  Future<String> fetchEvents(int disciplineId) async {
+    final token = await TokenRepository().get();
+    _logger.d("Trying to get events of $disciplineId");
+    var url = Uri.parse(
+        "${ApiConstants.baseUrl}${ApiConstants.disciplinesEndpoint}/$disciplineId${ApiConstants.eventsEndpoint}");
+    final response = await _client.get(
+      url,
+      headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer ${token.token}",
+      },
+    );
+    _logger.d(response.body);
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception(
+          "Failed to fetch events of $disciplineId, status code: ${response.statusCode}, response body: ${response.body}");
+    }
+  }
+
 // TODO: ask someone who has academic debts to test
   Future<void> fetchAcademicDepts() async {
     final token = await TokenRepository().get();
