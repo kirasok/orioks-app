@@ -3,15 +3,17 @@ import 'package:orioks/data/model/discipline.dart';
 import 'package:orioks/ui/colors.dart';
 
 class DisciplineTile extends StatelessWidget {
-  final Discipline _discipline;
+  final Discipline discipline;
+  final VoidCallback onTap;
 
-  const DisciplineTile(this._discipline, {super.key});
+  const DisciplineTile(
+      {super.key, required this.discipline, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     String grade = "-";
-    if (_discipline.currentGrade > 0) {
-      grade = _discipline.currentGrade.toString();
+    if (discipline.currentGrade > 0) {
+      grade = discipline.currentGrade.toString();
     }
     return ListTile(
       leading: Container(
@@ -20,7 +22,7 @@ class DisciplineTile extends StatelessWidget {
         width: 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: gradeToColor(_discipline.currentGrade, _discipline.maxGrade),
+          color: gradeToColor(discipline.currentGrade, discipline.maxGrade),
         ),
         child: Center(
           child: Text(
@@ -29,8 +31,9 @@ class DisciplineTile extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(_discipline.name),
-      subtitle: Text(_discipline.controlForm),
+      title: Text(discipline.name),
+      subtitle: Text(discipline.controlForm),
+      onTap: onTap,
     );
   }
 }

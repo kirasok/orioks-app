@@ -6,6 +6,7 @@ class ApiConstants {
   static const timetableEndpoint = "$scheduleEndpoint/timetable";
   static const studentEndpoint = "/student";
   static const disciplinesEndpoint = "$studentEndpoint/disciplines";
+  static const eventsEndpoint = "/events";
   static const academicDebtsEndpoint = "$studentEndpoint/academic-debts";
   static const userAgent = "orioks_app/0.1 Android";
 }
