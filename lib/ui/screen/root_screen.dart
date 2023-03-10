@@ -1,8 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orioks/logic/cubit/groups_cubit.dart';
 import 'package:orioks/logic/cubit/internet_cubit.dart';
 import 'package:orioks/logic/cubit/navigation_cubit.dart';
+import 'package:orioks/logic/cubit/schedule_cubit.dart';
 import 'package:orioks/logic/cubit/student_cubit.dart';
 import 'package:orioks/logic/cubit/subjects_cubit.dart';
 import 'package:orioks/ui/screen/schedule_screen.dart';
@@ -30,6 +32,15 @@ class _RootScreenState extends State<RootScreen> {
         BlocProvider(
             create: (context) => SubjectsCubit(
                 internetCubit: BlocProvider.of<InternetCubit>(context))),
+        BlocProvider(
+            create: (context) => GroupsCubit(
+                internetCubit: BlocProvider.of<InternetCubit>(context))),
+        BlocProvider(
+            create: (context) => ScheduleCubit(
+                  internetCubit: BlocProvider.of<InternetCubit>(context),
+                  studentCubit: BlocProvider.of<StudentCubit>(context),
+                  groupsCubit: BlocProvider.of<GroupsCubit>(context),
+                )),
       ],
       child: Scaffold(
         appBar: AppBar(
