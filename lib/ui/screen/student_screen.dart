@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orioks/logic/cubit/student_cubit.dart';
+import 'package:orioks/logic/cubit/tokens_cubit.dart';
 
 class StudentScreen extends StatefulWidget {
   const StudentScreen({super.key});
@@ -12,37 +13,42 @@ class StudentScreen extends StatefulWidget {
 class _StudentScreenState extends State<StudentScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StudentCubit, StudentState>(
-      builder: (context, state) {
-        if (state is StudentLoaded) {
+    return Builder(
+      builder: (context) {
+        final studentState = context.watch<StudentCubit>().state;
+        final tokensState = context.watch<TokensCubit>().state;
+        if (studentState is StudentLoaded && tokensState is TokensLoaded) {
           return Column(
             children: [
               Text(
-                state.student.department,
+                studentState.student.department,
                 style: const TextStyle(fontWeight: FontWeight.w300),
               ),
               Text(
-                state.student.group,
+                studentState.student.group,
                 style: const TextStyle(fontWeight: FontWeight.w400),
               ),
               Text(
-                state.student.fullName,
+                studentState.student.fullName,
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               const Divider(),
-              Text(state.student.studyDirection),
-              Text(state.student.studyProfile),
-              Text("Course ${state.student.course}"),
-              Text("Semester ${state.student.semester}"),
-              Text(state.student.year),
+              Text(studentState.student.studyDirection),
+              Text(studentState.student.studyProfile),
+              Text("Course ${studentState.student.course}"),
+              Text("Semester ${studentState.student.semester}"),
+              Text(studentState.student.year),
               // TODO: list notifications
               // TODO: list tokens
+              Column(
+                children: List<Widget>.from(
+                    tokensState.tokens.map((e) => Text(e.token))),
+              )
             ],
           );
-        } else if (state is StudentLoading) {
+        } else if (studentState is StudentLoading ||
+            tokensState is TokensLoading) {
           return const Center(child: CircularProgressIndicator.adaptive());
-        } else if (state is StudentFailed) {
-          return Text(state.e.toString());
         } else {
           return const Text("Can't load info!");
         }

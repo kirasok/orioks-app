@@ -8,6 +8,7 @@ import 'package:orioks/logic/cubit/navigation_cubit.dart';
 import 'package:orioks/logic/cubit/schedule_cubit.dart';
 import 'package:orioks/logic/cubit/student_cubit.dart';
 import 'package:orioks/logic/cubit/subjects_cubit.dart';
+import 'package:orioks/logic/cubit/tokens_cubit.dart';
 import 'package:orioks/ui/screen/about_screen.dart';
 import 'package:orioks/ui/screen/login_screen.dart';
 import 'package:orioks/ui/screen/schedule_screen.dart';
@@ -47,6 +48,9 @@ class _RootScreenState extends State<RootScreen> {
                 )),
         BlocProvider(
             create: (context) => LoginCubit(
+                internetCubit: BlocProvider.of<InternetCubit>(context))),
+        BlocProvider(
+            create: (context) => TokensCubit(
                 internetCubit: BlocProvider.of<InternetCubit>(context))),
       ],
       child: BlocBuilder<LoginCubit, LoginState>(
