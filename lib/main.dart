@@ -16,6 +16,7 @@ import 'ui/app.dart';
 
 // TODO: make icon for an app
 // TODO: rewrite schedule_cubit into 3 cubits
+// TODO: check if design complies with material 3
 
 Future setDesktopWindow() async {
   await DesktopWindow.setMinWindowSize(const Size(400, 400));
