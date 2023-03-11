@@ -220,4 +220,25 @@ class ApiService {
           "Failed to fetch list of tokens, status code: ${response.statusCode}, response body: ${response.body}");
     }
   }
+
+  Future<String> deleteToken(String tokenString) async {
+    final token = await TokenRepository().get();
+    _logger.d("Trying to delete token $tokenString");
+    var url = Uri.parse(
+        "${ApiConstants.baseUrl}${ApiConstants.tokensEndpoint}/$tokenString");
+    final response = await _client.get(
+      url,
+      headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer ${token.token}",
+      },
+    );
+    _logger.d(response.body);
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception(
+          "Failed to fetch delete token $tokenString, status code: ${response.statusCode}, response body: ${response.body}");
+    }
+  }
 }

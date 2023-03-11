@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orioks/data/model/token.dart';
-import 'package:orioks/logic/cubit/tokens_cubit.dart';
 
 class TokenTile extends StatelessWidget {
   final Token token;
@@ -10,13 +8,19 @@ class TokenTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.key_outlined),
-        title: Text("*" * token.token.length),
+        title: Text(token.token),
         subtitle: token.lastUsed != null
             ? Text(token.lastUsed!.toLocal().toString())
             : null,
         trailing: IconButton(
-          onPressed: () =>
-              BlocProvider.of<TokensCubit>(context).deleteToken(token),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+              title: Text("Not impelemented"),
+              content:
+                  Text("Developers of API did not implemented this feature"),
+            ),
+          ),
           icon: const Icon(Icons.delete),
         ),
       );

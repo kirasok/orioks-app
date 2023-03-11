@@ -44,4 +44,7 @@ class TokenRepository {
         .sort((a, b) => a.lastUsed?.compareTo(b.lastUsed ?? DateTime(0)) ?? 0);
     return tokens;
   }
+
+  Future<void> deleteToken(Token token) async =>
+      await ApiService().deleteToken(token.token);
 }
