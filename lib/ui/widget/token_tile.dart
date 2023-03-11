@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:orioks/data/model/token.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class TokenTile extends StatelessWidget {
   final Token token;
@@ -9,17 +11,19 @@ class TokenTile extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.key_outlined),
         title: token.lastUsed != null
-            ? Text(token.lastUsed!.toLocal().toString())
+            ? Text(DateFormat().format(token.lastUsed!.toLocal()))
             : null,
         subtitle: token.userAgent != null ? Text(token.userAgent!) : null,
         trailing: IconButton(
           onPressed: () => showDialog(
             context: context,
-            builder: (context) => const AlertDialog(
-              title: Text("Not impelemented"),
-              content:
-                  Text("Developers of API did not implemented this feature"),
-            ),
+            builder: (context) {
+              var localizations = AppLocalizations.of(context)!;
+              return AlertDialog(
+                title: Text(localizations.notImpl),
+                content: Text(localizations.notImplDesc),
+              );
+            },
           ),
           icon: const Icon(Icons.delete),
         ),
