@@ -26,8 +26,7 @@ class DisciplineTile extends StatelessWidget {
             builder: (_) => BlocProvider.value(
               value: BlocProvider.of<EventsCubit>(context),
               child: EventsScreen(
-                disciplineName: discipline.name,
-                disciplineId: discipline.id,
+                discipline: discipline,
               ),
             ),
           ),
