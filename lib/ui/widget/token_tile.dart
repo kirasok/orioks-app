@@ -8,10 +8,10 @@ class TokenTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.key_outlined),
-        title: Text(token.token),
-        subtitle: token.lastUsed != null
+        title: token.lastUsed != null
             ? Text(token.lastUsed!.toLocal().toString())
             : null,
+        subtitle: token.userAgent != null ? Text(token.userAgent!) : null,
         trailing: IconButton(
           onPressed: () => showDialog(
             context: context,
