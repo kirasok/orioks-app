@@ -15,6 +15,7 @@ import 'package:orioks/ui/screen/schedule_screen.dart';
 import 'package:orioks/ui/screen/student_screen.dart';
 import 'package:orioks/ui/screen/subjects_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -56,9 +57,10 @@ class _RootScreenState extends State<RootScreen> {
       child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
           if (state is LoginSuccessful) {
+            var localizations = AppLocalizations.of(context);
             return Scaffold(
               appBar: AppBar(
-                title: const Text("Orioks Unofficial"),
+                title: Text(localizations!.title),
                 actions: [
                   IconButton(
                     onPressed: () async => showAboutScreen(
@@ -71,21 +73,21 @@ class _RootScreenState extends State<RootScreen> {
                   BlocBuilder<NavigationCubit, NavigationState>(
                 builder: (context, state) => NavigationBar(
                   selectedIndex: state.index,
-                  destinations: const [
+                  destinations: [
                     NavigationDestination(
-                      icon: Icon(Icons.schedule_outlined),
-                      selectedIcon: Icon(Icons.schedule),
-                      label: 'Schedule',
+                      icon: const Icon(Icons.schedule_outlined),
+                      selectedIcon: const Icon(Icons.schedule),
+                      label: localizations.schedule,
                     ),
                     NavigationDestination(
-                      icon: Icon(Icons.subject_outlined),
-                      selectedIcon: Icon(Icons.subject),
-                      label: 'Subjects',
+                      icon: const Icon(Icons.subject_outlined),
+                      selectedIcon: const Icon(Icons.subject),
+                      label: localizations.disciplines,
                     ),
                     NavigationDestination(
-                      icon: Icon(Icons.person_outlined),
-                      selectedIcon: Icon(Icons.person),
-                      label: 'Student',
+                      icon: const Icon(Icons.person_outlined),
+                      selectedIcon: const Icon(Icons.person),
+                      label: localizations.student,
                     ),
                   ],
                   onDestinationSelected: (index) {
@@ -118,7 +120,8 @@ class _RootScreenState extends State<RootScreen> {
                     case NavBarItem.student:
                       return const StudentScreen();
                     default:
-                      return const Text("Loading");
+                      return const Center(
+                          child: CircularProgressIndicator.adaptive());
                   }
                 },
               ),

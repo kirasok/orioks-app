@@ -1,2 +1,16 @@
 {
+  "title": "Orioks Unofficial",
+  "description": "Unofficial app for Orioks",
+  "viewLicense": "View license",
+  "viewLibLicenses": "View open source licenses",
+  "viewReadme": "View README",
+  "viewChangelog": "View changelog",
+  "schedule": "Schedule",
+  "disciplines": "Disciplines",
+  "student": "Student",
+  "tokens": "Tokens",
+  "semester": "Semester",
+  "course": "Course",
+  "notImpl": "Not Implemented",
+  "notImplDesc": "Developers of API did not implemented this feature"
 }
