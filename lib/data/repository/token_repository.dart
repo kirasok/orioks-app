@@ -41,7 +41,7 @@ class TokenRepository {
     List<dynamic> json = jsonDecode(response);
     var tokens = List<Token>.from(json.map((e) => Token.fromJson(e)));
     tokens
-        .sort((a, b) => a.lastUsed?.compareTo(b.lastUsed ?? DateTime(0)) ?? 0);
+        .sort((a, b) => b.lastUsed?.compareTo(a.lastUsed ?? DateTime(0)) ?? 0);
     return tokens;
   }
 
