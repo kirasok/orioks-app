@@ -19,8 +19,7 @@ class TokenRepository {
     String? token = await _storage.read(key: _key);
     if (token != null) {
       return Token(token);
-    } else {
-      // TODO: ask user to provide login and password if they are null
+    } else if (login != null && password != null) {
       final String credentials = '$login:$password';
       var stringToBase64 = utf8.fuse(base64);
       var encodedCredentials = stringToBase64.encode(credentials);
@@ -29,9 +28,23 @@ class TokenRepository {
       await _write(Token.fromJson(jsonDecode(json)));
       token = await _storage.read(key: _key);
       return Token(token!);
+    } else {
+      throw Exception("Failed to fetch token");
     }
   }
 
   Future<void> _write(Token token) =>
       _storage.write(key: _key, value: token.token);
+
+  Future<List<Token>> getAllTokens() async {
+    String response = await ApiService().fetchTokens();
+    List<dynamic> json = jsonDecode(response);
+    var tokens = List<Token>.from(json.map((e) => Token.fromJson(e)));
+    tokens
+        .sort((a, b) => b.lastUsed?.compareTo(a.lastUsed ?? DateTime(0)) ?? 0);
+    return tokens;
+  }
+
+  Future<void> deleteToken(Token token) async =>
+      await ApiService().deleteToken(token.token);
 }
