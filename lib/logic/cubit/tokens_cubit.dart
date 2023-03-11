@@ -47,6 +47,8 @@ class TokensCubit extends Cubit<TokensState> {
       .getAllTokens()
       .then((value) => emit(TokensLoaded(tokens: value)));
 
+  Future<void> deleteToken(Token token) async {}
+
   @override
   Future<void> close() {
     streamSubscription.cancel();
