@@ -14,7 +14,6 @@ import 'ui/app.dart';
 // TODO: refactor int, double, num
 // TODO: ensure consistency of variable's names
 
-// TODO: make icon for an app
 // TODO: rewrite schedule_cubit into 3 cubits
 // TODO: check if design complies with material 3
 

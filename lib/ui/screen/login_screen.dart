@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterLogin(
       title: "Orioks Unofficial",
-      // TODO: logo
+      logo: const AssetImage('assets/icon/app.png'),
       onLogin: (LoginData data) {
         BlocProvider.of<LoginCubit>(context)
             .writeToken(data.name, data.password);
