@@ -26,6 +26,8 @@ class ScheduleLoaded extends ScheduleState {
       required this.scheduleOfGroup});
 
   List<ScheduleItem> getScheduleOnDay(DateTime now) {
+    if (now.weekday == 6) now = now.add(const Duration(days: 2));
+    if (now.weekday == 7) now = now.add(const Duration(days: 1));
     final difference = now.difference(schedule.sessionStart ?? DateTime.now());
     int week = difference.inDays ~/
         7 %
