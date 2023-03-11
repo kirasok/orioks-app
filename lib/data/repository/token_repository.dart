@@ -35,4 +35,13 @@ class TokenRepository {
 
   Future<void> _write(Token token) =>
       _storage.write(key: _key, value: token.token);
+
+  Future<List<Token>> getAllTokens() async {
+    String response = await ApiService().fetchTokens();
+    List<dynamic> json = jsonDecode(response);
+    var tokens = List<Token>.from(json.map((e) => Token.fromJson(e)));
+    tokens
+        .sort((a, b) => a.lastUsed?.compareTo(b.lastUsed ?? DateTime(0)) ?? 0);
+    return tokens;
+  }
 }
