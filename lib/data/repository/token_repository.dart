@@ -19,8 +19,7 @@ class TokenRepository {
     String? token = await _storage.read(key: _key);
     if (token != null) {
       return Token(token);
-    } else {
-      // TODO: ask user to provide login and password if they are null
+    } else if (login != null && password != null) {
       final String credentials = '$login:$password';
       var stringToBase64 = utf8.fuse(base64);
       var encodedCredentials = stringToBase64.encode(credentials);
@@ -29,6 +28,8 @@ class TokenRepository {
       await _write(Token.fromJson(jsonDecode(json)));
       token = await _storage.read(key: _key);
       return Token(token!);
+    } else {
+      throw Exception("Failed to fetch token");
     }
   }
 
