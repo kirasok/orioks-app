@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orioks/logic/cubit/groups_cubit.dart';
 import 'package:orioks/logic/cubit/internet_cubit.dart';
+import 'package:orioks/logic/cubit/login_cubit.dart';
 import 'package:orioks/logic/cubit/navigation_cubit.dart';
 import 'package:orioks/logic/cubit/schedule_cubit.dart';
 import 'package:orioks/logic/cubit/student_cubit.dart';
 import 'package:orioks/logic/cubit/subjects_cubit.dart';
 import 'package:orioks/ui/screen/about_screen.dart';
+import 'package:orioks/ui/screen/login_screen.dart';
 import 'package:orioks/ui/screen/schedule_screen.dart';
 import 'package:orioks/ui/screen/student_screen.dart';
 import 'package:orioks/ui/screen/subjects_screen.dart';
@@ -43,72 +45,88 @@ class _RootScreenState extends State<RootScreen> {
                   studentCubit: BlocProvider.of<StudentCubit>(context),
                   groupsCubit: BlocProvider.of<GroupsCubit>(context),
                 )),
+        BlocProvider(
+            create: (context) => LoginCubit(
+                internetCubit: BlocProvider.of<InternetCubit>(context))),
       ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Orioks Unofficial"),
-          actions: [
-            IconButton(
-              onPressed: () async =>
-                  showAboutScreen(context, await PackageInfo.fromPlatform()),
-              icon: const Icon(Icons.info_outline),
-            )
-          ],
-        ),
-        bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
-          builder: (context, state) => NavigationBar(
-            selectedIndex: state.index,
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.schedule_outlined),
-                selectedIcon: Icon(Icons.schedule),
-                label: 'Schedule',
+      child: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          if (state is LoginSuccessful) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Orioks Unofficial"),
+                actions: [
+                  IconButton(
+                    onPressed: () async => showAboutScreen(
+                        context, await PackageInfo.fromPlatform()),
+                    icon: const Icon(Icons.info_outline),
+                  )
+                ],
               ),
-              NavigationDestination(
-                icon: Icon(Icons.subject_outlined),
-                selectedIcon: Icon(Icons.subject),
-                label: 'Subjects',
+              bottomNavigationBar:
+                  BlocBuilder<NavigationCubit, NavigationState>(
+                builder: (context, state) => NavigationBar(
+                  selectedIndex: state.index,
+                  destinations: const [
+                    NavigationDestination(
+                      icon: Icon(Icons.schedule_outlined),
+                      selectedIcon: Icon(Icons.schedule),
+                      label: 'Schedule',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.subject_outlined),
+                      selectedIcon: Icon(Icons.subject),
+                      label: 'Subjects',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.person_outlined),
+                      selectedIcon: Icon(Icons.person),
+                      label: 'Student',
+                    ),
+                  ],
+                  onDestinationSelected: (index) {
+                    switch (index) {
+                      case 0:
+                        BlocProvider.of<NavigationCubit>(context)
+                            .getNavBarItem(NavBarItem.schedule);
+                        break;
+                      case 1:
+                        BlocProvider.of<NavigationCubit>(context)
+                            .getNavBarItem(NavBarItem.subjects);
+                        break;
+                      case 2:
+                        BlocProvider.of<NavigationCubit>(context)
+                            .getNavBarItem(NavBarItem.student);
+                        break;
+                      default:
+                        throw Exception("Unknown index: $index");
+                    }
+                  },
+                ),
               ),
-              NavigationDestination(
-                icon: Icon(Icons.person_outlined),
-                selectedIcon: Icon(Icons.person),
-                label: 'Student',
+              body: BlocBuilder<NavigationCubit, NavigationState>(
+                builder: (context, state) {
+                  switch (state.navBarItem) {
+                    case NavBarItem.schedule:
+                      return const ScheduleScreen();
+                    case NavBarItem.subjects:
+                      return const SubjectsScreen();
+                    case NavBarItem.student:
+                      return const StudentScreen();
+                    default:
+                      return const Text("Loading");
+                  }
+                },
               ),
-            ],
-            onDestinationSelected: (index) {
-              switch (index) {
-                case 0:
-                  BlocProvider.of<NavigationCubit>(context)
-                      .getNavBarItem(NavBarItem.schedule);
-                  break;
-                case 1:
-                  BlocProvider.of<NavigationCubit>(context)
-                      .getNavBarItem(NavBarItem.subjects);
-                  break;
-                case 2:
-                  BlocProvider.of<NavigationCubit>(context)
-                      .getNavBarItem(NavBarItem.student);
-                  break;
-                default:
-                  throw Exception("Unknown index: $index");
-              }
-            },
-          ),
-        ),
-        body: BlocBuilder<NavigationCubit, NavigationState>(
-          builder: (context, state) {
-            switch (state.navBarItem) {
-              case NavBarItem.schedule:
-                return const ScheduleScreen();
-              case NavBarItem.subjects:
-                return const SubjectsScreen();
-              case NavBarItem.student:
-                return const StudentScreen();
-              default:
-                return const Text("Loading");
-            }
-          },
-        ),
+            );
+          } else if (state is LoginProgress) {
+            return const LoginScreen();
+          } else if (state is LoginFailed) {
+            return Text(state.e.toString());
+          } else {
+            return const Text("Failed to fetch token");
+          }
+        },
       ),
     );
   }
