@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orioks/data/model/discipline.dart';
 import 'package:orioks/logic/cubit/events_cubit.dart';
-import 'package:orioks/ui/colors.dart';
+import 'package:orioks/ui/screen/events_screen.dart';
 
-import '../screen/events_screen.dart';
+import 'grade.dart';
 
 class DisciplineTile extends StatelessWidget {
   final Discipline discipline;
@@ -13,26 +13,10 @@ class DisciplineTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String grade = "-";
-    if (discipline.currentGrade > 0) {
-      grade = discipline.currentGrade.toString();
-    }
     return ListTile(
-      leading: Container(
-        padding: const EdgeInsets.all(5),
-        height: 48,
-        width: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
-          color: gradeToColor(
-              discipline.currentGrade, discipline.maxGrade, context),
-        ),
-        child: Center(
-          child: Text(
-            grade,
-            style: const TextStyle(fontWeight: FontWeight.w800),
-          ),
-        ),
+      leading: Grade(
+        current: discipline.currentGrade,
+        max: discipline.maxGrade,
       ),
       title: Text(discipline.name),
       subtitle: Text(discipline.controlForm),
