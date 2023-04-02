@@ -10,9 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
-      - run: flutter build web --release --base-href /orioks/
-      - run: git config user.name github-actions
-      - run: git config user.email github-actions@github.com
-      - run: git --work-tree build/web add --all
-      - run: git commit -m "Automatic deployment by github-actions"
-      - run: git push origin HEAD:gh-pages --force
+      - name: building
+        run: flutter build web --release --base-href /orioks/
+      - name: push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git --work-tree build/web add --all
+          git commit -m "chore(actions) web automatic deployment"
+          git push origin HEAD:gh-pages --force
