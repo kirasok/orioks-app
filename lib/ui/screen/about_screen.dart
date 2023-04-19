@@ -11,14 +11,6 @@ void showAboutScreen(BuildContext context, PackageInfo packageInfo) =>
       title: Text(packageInfo.appName),
       applicationName: packageInfo.appName,
       applicationVersion: packageInfo.version,
-      applicationIcon: SizedBox(
-        width: 100,
-        height: 100,
-        child: Image.asset(
-          'assets/icon/app.png',
-          fit: BoxFit.scaleDown,
-        ),
-      ),
       applicationLegalese: 'Copyright © Kirill Mokretsov, {{ year }}',
       applicationDescription: const Center(
         child: Text('Unofficial app for Orioks'),
