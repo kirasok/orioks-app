@@ -1,5 +1,7 @@
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
+import 'package:orioks/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 import 'ui/app.dart';
@@ -7,8 +9,6 @@ import 'ui/app.dart';
 // TODO: check if it is neccessary to update schedule https://gitlab.com/orioks/student-api/-/blob/master/docs/schedule.rst
 // TODO: fetch resits using id of discipline https://gitlab.com/orioks/student-api/-/blob/master/docs/student/resits.rst
 // TODO: push notifications api https://gitlab.com/orioks/student-api/-/blob/master/docs/student/pushes.rst
-
-// TODO: find a way to store data
 
 // TODO: clean stream handling in cubits
 // TODO: refactor int, double, num
@@ -22,10 +22,15 @@ Future setDesktopWindow() async {
   await DesktopWindow.setMinWindowSize(const Size(400, 400));
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (UniversalPlatform.isDesktop) setDesktopWindow();
 
   runApp(const MyApp());
+
+  var prefs = await SharedPreferences.getInstance();
+  if (prefs.getBool(Constants.demoModeKey) ?? false) {
+    await prefs.clear();
+  }
 }

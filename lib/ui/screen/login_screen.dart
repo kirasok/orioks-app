@@ -18,6 +18,12 @@ class LoginScreen extends StatelessWidget {
       },
       onRecoverPassword: (_) => null,
       hideForgotPasswordButton: true,
+      headerWidget: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        child: ElevatedButton(
+            onPressed: () => BlocProvider.of<LoginCubit>(context).enableDemo(),
+            child: const Text("Enable demo mode")),
+      ),
     );
   }
 }

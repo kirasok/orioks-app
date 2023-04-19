@@ -16,20 +16,23 @@ class InternetCubit extends Cubit<InternetState> {
   late StreamSubscription connectivityStreamSubscription;
 
   InternetCubit({required this.connectivity}) : super(InternetLoading()) {
+    connectivity.checkConnectivity().then((value) => _emit(value));
     connectivityStreamSubscription =
-        connectivity.onConnectivityChanged.listen((event) {
-      switch (event) {
-        case ConnectivityResult.wifi:
-        case ConnectivityResult.ethernet:
-        case ConnectivityResult.mobile:
-        case ConnectivityResult.vpn:
-          emit(InternetConnected());
-          break;
-        case ConnectivityResult.none:
-        default:
-          emit(InternetDisconnected());
-      }
-    });
+        connectivity.onConnectivityChanged.listen((event) => _emit(event));
+  }
+
+  void _emit(ConnectivityResult event) {
+    switch (event) {
+      case ConnectivityResult.wifi:
+      case ConnectivityResult.ethernet:
+      case ConnectivityResult.mobile:
+      case ConnectivityResult.vpn:
+        emit(InternetConnected());
+        break;
+      case ConnectivityResult.none:
+      default:
+        emit(InternetDisconnected());
+    }
   }
 
   @override

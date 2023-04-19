@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:orioks/constants.dart';
 import 'package:orioks/data/repository/token_repository.dart';
 import 'package:orioks/logic/cubit/internet_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LoginState {}
 
@@ -44,6 +46,12 @@ class LoginCubit extends Cubit<LoginState> {
         password: password,
       )
       .then((value) => emit(LoginSuccessful()));
+
+  Future<void> enableDemo() async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(Constants.demoModeKey, true);
+    emit(LoginSuccessful());
+  }
 
   @override
   Future<void> close() {
