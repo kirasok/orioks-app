@@ -16,12 +16,31 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return BlocBuilder<ScheduleCubit, ScheduleState>(builder: (context, state) {
       if (state is ScheduleLoaded) {
         var schedule = state.getScheduleOnToday();
-        return ListView.builder(
-          itemBuilder: (context, index) => ScheduleTile(
-            timetable: state.timetable,
-            pair: schedule.pairs[index],
+        var week = state.getWeekNumberOnToday();
+        final List<Widget> list = [];
+        String d = week % 2 == 0 ? "Numerator" : "Denominator";
+        list.add(
+          Center(
+            child: Text(
+              "Week $week",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
-          itemCount: schedule.pairs.length,
+        );
+        list.add(
+          Center(
+            child: Text(
+              d,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        );
+        for (var pair in schedule.pairs) {
+          list.add(ScheduleTile(timetable: state.timetable, pair: pair));
+        }
+        return ListView.builder(
+          itemBuilder: (context, index) => list[index],
+          itemCount: list.length,
         );
       } else if (state is ScheduleLoading) {
         return const Center(child: CircularProgressIndicator.adaptive());
