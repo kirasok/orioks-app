@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:orioks/data/model/schedule_of_group.dart';
 import 'package:orioks/logic/cubit/schedule_cubit.dart';
 import 'package:orioks/ui/widget/schedule_title.dart';
 
@@ -15,16 +14,33 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScheduleCubit, ScheduleState>(builder: (context, state) {
-      // TODO: handle double pairs
       if (state is ScheduleLoaded) {
-        var schedule =
-            List<ScheduleItem>.from(state.getScheduleOnDay(DateTime.now()));
-        return ListView.builder(
-          itemBuilder: (context, index) => ScheduleTile(
-            timetable: state.timetable,
-            pair: schedule[index],
+        var schedule = state.getScheduleOnToday();
+        var week = state.getWeekNumberOnToday();
+        final List<Widget> list = [];
+        String d = week % 2 == 0 ? "Numerator" : "Denominator";
+        list.add(
+          Center(
+            child: Text(
+              "Week $week",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
-          itemCount: schedule.length,
+        );
+        list.add(
+          Center(
+            child: Text(
+              d,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        );
+        for (var pair in schedule.pairs) {
+          list.add(ScheduleTile(timetable: state.timetable, pair: pair));
+        }
+        return ListView.builder(
+          itemBuilder: (context, index) => list[index],
+          itemCount: list.length,
         );
       } else if (state is ScheduleLoading) {
         return const Center(child: CircularProgressIndicator.adaptive());
