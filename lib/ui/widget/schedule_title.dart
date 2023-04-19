@@ -9,11 +9,18 @@ class ScheduleTile extends StatelessWidget {
   const ScheduleTile({super.key, required this.timetable, required this.pair});
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        title: Text("${pair.name} (${pair.type})"),
-        subtitle: Text(pair.teacher),
-        leading: Text(
-            "${timetable.pairs[pair.pair]?.start.format(context)}\n${timetable.pairs[pair.pair]?.end.format(context)}"),
-        trailing: Text(pair.location),
-      );
+  Widget build(BuildContext context) {
+    String type = "";
+    if (pair.type != "") {
+      type = "(${pair.type})";
+    }
+    String start = timetable.pairs[pair.pair]?.start.format(context) ?? "";
+    String end = timetable.pairs[pair.pair]?.end.format(context) ?? "";
+    return ListTile(
+      title: Text("${pair.name} $type"),
+      subtitle: Text(pair.teacher),
+      leading: Text("$start\n$end"),
+      trailing: Text(pair.location),
+    );
+  }
 }
