@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:orioks/constants.dart';
 
 import 'package:orioks/data/api/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/schedule_of_group.dart';
 
@@ -13,7 +16,15 @@ class ScheduleOfGroupRepository {
   factory ScheduleOfGroupRepository() => _instance;
 
   Future<ScheduleOfGroup> get(int groupId) async {
-    String json = await ApiService().fetchScheduleOfGroup(groupId);
+    String json;
+    if ((await SharedPreferences.getInstance())
+            .getBool(Constants.demoModeKey) ??
+        false) {
+      json = await rootBundle
+          .loadString('templates/advanced/scheduleOfGroup.json');
+    } else {
+      json = await ApiService().fetchScheduleOfGroup(groupId);
+    }
     List<dynamic> dynamicList = jsonDecode(json);
     return ScheduleOfGroup(
       List.from(
