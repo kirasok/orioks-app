@@ -2,7 +2,7 @@ class Discipline {
   String controlForm;
   num currentGrade;
   String departament;
-  String examDate;
+  DateTime? examDate;
   int id;
   num maxGrade;
   String name;
@@ -18,14 +18,16 @@ class Discipline {
     required this.name,
     required this.teachers,
   });
-  static Discipline fromJson(Map<String, dynamic> json) => Discipline(
-        controlForm: json["control_form"],
-        currentGrade: json["current_grade"] as num,
-        departament: json["department"],
-        examDate: json["exam_date"],
-        id: json["id"],
-        maxGrade: json["max_grade"] as num,
-        name: json["name"],
-        teachers: List<String>.from(json["teachers"] as List<dynamic>),
-      );
+  static Discipline fromJson(Map<String, dynamic> json) {
+    return Discipline(
+      controlForm: json["control_form"],
+      currentGrade: json["current_grade"] as num,
+      departament: json["department"],
+      examDate: DateTime.tryParse(json["exam_date"]),
+      id: json["id"],
+      maxGrade: json["max_grade"] as num,
+      name: json["name"],
+      teachers: List<String>.from(json["teachers"] as List<dynamic>),
+    );
+  }
 }
