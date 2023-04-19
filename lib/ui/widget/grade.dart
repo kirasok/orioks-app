@@ -16,8 +16,8 @@ class Grade extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.all(5),
-      height: 56,
-      width: 56,
+      height: 72,
+      width: 72,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         color: gradeToColor(current, max, context),
