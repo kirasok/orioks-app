@@ -29,6 +29,16 @@ class ScheduleItem {
         location: json['location'],
         teacher: json['teacher'],
       );
+
+  ScheduleItem copy() => ScheduleItem(
+      name: name,
+      type: type,
+      day: day,
+      pair: pair,
+      week: week,
+      weekRecurrence: weekRecurrence,
+      location: location,
+      teacher: teacher);
 }
 
 class ScheduleOfGroup {
