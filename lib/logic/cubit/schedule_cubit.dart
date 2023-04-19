@@ -26,16 +26,7 @@ class ScheduleLoaded extends ScheduleState {
       required this.scheduleOfGroup});
 
   ScheduleOfGroup getScheduleOnDay(DateTime datetime) {
-    // Move to the next week if it's weekend
-    if (datetime.weekday == 6) datetime = datetime.add(const Duration(days: 2));
-    if (datetime.weekday == 7) datetime = datetime.add(const Duration(days: 1));
-    // Find the difference between the start of current week and start of week when semester started
-    final weekstart = datetime.subtract(Duration(days: datetime.weekday));
-    final scheduleStart = schedule.semesterStart ?? DateTime.now();
-    final difference = weekstart.difference(
-        scheduleStart.subtract(Duration(days: scheduleStart.weekday)));
-    // Find if it's numerator or denominator
-    final week = difference.inDays ~/ 7 % 2;
+    final week = getWeekNumberOnDay(datetime) % 2;
     // Select pairs on the current week and weekday
     scheduleOfGroup.pairs = List.from(scheduleOfGroup.pairs.where((element) =>
         element.week == week && element.day == datetime.weekday - 1));
@@ -70,6 +61,21 @@ class ScheduleLoaded extends ScheduleState {
   }
 
   ScheduleOfGroup getScheduleOnToday() => getScheduleOnDay(DateTime.now());
+
+  int getWeekNumberOnDay(DateTime datetime) {
+    // Move to the next week if it's weekend
+    if (datetime.weekday == 6) datetime = datetime.add(const Duration(days: 2));
+    if (datetime.weekday == 7) datetime = datetime.add(const Duration(days: 1));
+    // Find the difference between the start of current week and start of week when semester started
+    final weekstart = datetime.subtract(Duration(days: datetime.weekday));
+    final scheduleStart = schedule.semesterStart ?? DateTime.now();
+    final difference = weekstart.difference(
+        scheduleStart.subtract(Duration(days: scheduleStart.weekday)));
+    // Find if it's numerator or denominator
+    return difference.inDays ~/ 7;
+  }
+
+  int getWeekNumberOnToday() => getWeekNumberOnDay(DateTime.now());
 }
 
 class ScheduleLoading extends ScheduleState {}
