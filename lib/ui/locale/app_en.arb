@@ -12,5 +12,8 @@
   "semester": "Semester",
   "course": "Course",
   "notImpl": "Not Implemented",
-  "notImplDesc": "Developers of API did not implemented this feature"
+  "notImplDesc": "Developers of API did not implemented this feature",
+  "week": "Week",
+  "denominator": "Denominator",
+  "numerator": "Numerator"
 }
