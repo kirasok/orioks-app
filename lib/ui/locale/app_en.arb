@@ -15,5 +15,6 @@
   "notImplDesc": "Developers of API did not implemented this feature",
   "week": "Week",
   "denominator": "Denominator",
-  "numerator": "Numerator"
+  "numerator": "Numerator",
+  "demo", "Enable demo mode"
 }
