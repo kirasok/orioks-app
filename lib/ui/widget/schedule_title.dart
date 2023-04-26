@@ -37,7 +37,7 @@ class ScheduleTile extends StatelessWidget {
   }
 
   Widget _buildTile(String type, String start, String end) => ListTile(
-        title: Text("${pair.name} $type"),
+        title: Text("$type ${pair.name}"),
         subtitle: Text(pair.teacher),
         leading: Text("$start\n$end"),
         trailing: Text(pair.location),
