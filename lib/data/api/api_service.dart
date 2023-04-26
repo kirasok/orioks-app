@@ -180,7 +180,6 @@ class ApiService {
     }
   }
 
-// TODO: ask someone who has academic debts to test
   Future<void> fetchAcademicDepts() async {
     final token = await TokenRepository().get();
     _logger.d("Trying to get academic debts");
