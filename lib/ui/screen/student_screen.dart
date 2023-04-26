@@ -51,6 +51,5 @@ class _StudentScreenState extends State<StudentScreen> {
         Text("${localizations!.course} ${student.course}"),
         Text("${localizations.semester} ${student.semester}"),
         Text(student.year),
-        // TODO: list notifications
       ];
 }
