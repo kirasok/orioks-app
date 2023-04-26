@@ -23,7 +23,11 @@ void showAboutScreen(BuildContext context, PackageInfo packageInfo) {
         title: Text(localizations.viewReadme),
         filename: "README.md",
       ),
-      // TODO: add changelog
+      MarkdownPageListTile(
+        icon: const Icon(Icons.menu_book_outlined),
+        title: Text(localizations.viewChangelog),
+        filename: "CHANGELOG.md",
+      ),
       MarkdownPageListTile(
         icon: const Icon(Icons.description),
         title: Text(localizations.viewLicense),
