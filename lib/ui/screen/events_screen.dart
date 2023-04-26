@@ -33,8 +33,8 @@ class EventsScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                discipline.examDate != ""
-                    ? Text(discipline.examDate)
+                discipline.examDate != null
+                    ? Text(discipline.examDate.toString())
                     : const SizedBox(),
               ] +
               teachers +

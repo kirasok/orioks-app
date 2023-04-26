@@ -1,0 +1,51 @@
+[
+  {
+    "alias": "СР.1",
+    "current_grade": 4,
+    "max_grade": 5,
+    "type": "Самостоятельная работа",
+    "week": 6
+  },
+  {
+    "alias": "ДЗ.1",
+    "current_grade": 4,
+    "max_grade": 5,
+    "type": "Домашнее задание",
+    "week": 8
+  },
+  {
+    "alias": "КР.1",
+    "current_grade": 8,
+    "max_grade": 10,
+    "type": "Контрольная работа",
+    "week": 8
+  },
+  {
+    "alias": "К.1",
+    "current_grade": 14,
+    "max_grade": 15,
+    "type": "Коллоквиум",
+    "week": 11
+  },
+  { "alias": "ДЗ.2", "max_grade": 5, "type": "Домашнее задание", "week": 14 },
+  {
+    "alias": "КР.2",
+    "max_grade": 10,
+    "type": "Контрольная работа",
+    "week": 14
+  },
+  { "alias": "ДЗ.3", "max_grade": 5, "type": "Домашнее задание", "week": 16 },
+  {
+    "alias": "КР.3",
+    "max_grade": 10,
+    "type": "Контрольная работа",
+    "week": 16
+  },
+  {
+    "alias": "А/П.1",
+    "max_grade": 10,
+    "type": "Активность/Посещаемость",
+    "week": 16
+  },
+  { "max_grade": 25, "name": "Итог", "type": "Экзамен", "week": 19 }
+]

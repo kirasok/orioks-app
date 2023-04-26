@@ -1,0 +1,62 @@
+[
+  {
+    "alias": "ПЗ.1",
+    "current_grade": 4,
+    "max_grade": 10,
+    "name": "КМ1",
+    "type": "Практическое занятие",
+    "week": 6
+  },
+  {
+    "alias": "СР.1",
+    "current_grade": 10,
+    "max_grade": 10,
+    "name": "СР1 (Hybrid Cars)",
+    "type": "Самостоятельная работа",
+    "week": 6
+  },
+  {
+    "alias": "ПЗ.2",
+    "max_grade": 10,
+    "current_grade": 10,
+    "name": "КМ2",
+    "type": "Практическое занятие",
+    "week": 12
+  },
+  {
+    "alias": "СР.2",
+    "max_grade": 10,
+    "current_grade": 10,
+    "name": "СР2 The Internet",
+    "type": "Самостоятельная работа",
+    "week": 12
+  },
+  {
+    "alias": "ПЗ.3",
+    "max_grade": 10,
+    "name": "КМ3",
+    "type": "Практическое занятие",
+    "week": 16
+  },
+  {
+    "alias": "СР.3",
+    "max_grade": 10,
+    "name": "СР3 The International Space Station",
+    "type": "Самостоятельная работа",
+    "week": 16
+  },
+  {
+    "alias": "КР.1",
+    "max_grade": 10,
+    "name": "КР1",
+    "type": "Контрольная работа",
+    "week": 16
+  },
+  {
+    "alias": "З.1",
+    "max_grade": 30,
+    "name": "Итого",
+    "type": "Зачёт",
+    "week": 18
+  }
+]

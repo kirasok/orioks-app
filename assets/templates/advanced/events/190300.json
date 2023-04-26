@@ -1,0 +1,30 @@
+[
+  {
+    "alias": "С.1",
+    "current_grade": 9,
+    "max_grade": 9,
+    "type": "Семинар",
+    "week": 4
+  },
+  {
+    "alias": "С.2",
+    "current_grade": 8.5,
+    "max_grade": 9,
+    "type": "Семинар",
+    "week": 7
+  },
+  { "alias": "С.3", "max_grade": 9, "type": "Семинар", "week": 12 },
+  {
+    "alias": "ИКР.1",
+    "max_grade": 11,
+    "type": "Итоговая контрольная работа",
+    "week": 16
+  },
+  {
+    "alias": "КМ.1",
+    "max_grade": 46,
+    "type": "Контрольное мероприятие",
+    "week": 18
+  },
+  { "alias": "Л.1", "max_grade": 16, "type": "Лекция", "week": 18 }
+]
