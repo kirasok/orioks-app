@@ -29,8 +29,6 @@ void showAboutScreen(BuildContext context, PackageInfo packageInfo) {
         title: Text(localizations.viewLicense),
         filename: "LICENSE",
       ),
-      // TODO: add contributing
-      // TODO: add code of conduct
       LicensesPageListTile(
         icon: const Icon(Icons.favorite),
         title: Text(localizations.viewLibLicenses),
