@@ -1,0 +1,21 @@
+name: Flutter Web Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - name: building
+        run: flutter build web --release --base-href /orioks/
+      - name: push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git --work-tree build/web add --all
+          git commit -m "chore(actions) web automatic deployment"
+          git push origin HEAD:gh-pages --force

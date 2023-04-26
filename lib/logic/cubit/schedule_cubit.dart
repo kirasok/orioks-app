@@ -25,18 +25,57 @@ class ScheduleLoaded extends ScheduleState {
       required this.schedule,
       required this.scheduleOfGroup});
 
-  List<ScheduleItem> getScheduleOnDay(DateTime now) {
-    if (now.weekday == 6) now = now.add(const Duration(days: 2));
-    if (now.weekday == 7) now = now.add(const Duration(days: 1));
-    final difference = now.difference(schedule.sessionStart ?? DateTime.now());
-    int week = difference.inDays ~/
-        7 %
-        scheduleOfGroup.pairs.first.weekRecurrence.toInt();
-    List<ScheduleItem> list = List.from(scheduleOfGroup.pairs.where(
-        (element) => element.week == week && element.day == now.weekday - 1));
+  ScheduleOfGroup getScheduleOnDay(DateTime datetime) {
+    final week = getWeekNumberOnDay(datetime) % 2;
+    // Select pairs on the current week and weekday
+    scheduleOfGroup.pairs = List.from(scheduleOfGroup.pairs.where((element) =>
+        element.week == week && element.day == datetime.weekday - 1));
+    // On 2023-04-19 server sends double pairs in one object
+    List<ScheduleItem> list = List.from(scheduleOfGroup.pairs);
+    for (var element in scheduleOfGroup.pairs) {
+      if (element.name.endsWith("(2 пары)")) {
+        element.name = element.name.replaceAll("(2 пары)", "");
+        ScheduleItem second = element.copy();
+        second.pair++;
+        list.add(second);
+      }
+    }
+    // On 2023-04-19 server sends pair with variable location in two objects
+    for (int a = 0; a < list.length - 1; a++) {
+      for (int b = a + 1; b < list.length; b++) {
+        if (a != b) {
+          if (list[a].name == list[b].name &&
+              list[a].day == list[b].day &&
+              list[a].pair == list[b].pair) {
+            list[a].location = "${list[a].location}\n${list[b].location}";
+            list.removeAt(b);
+          }
+        }
+      }
+    }
+    // Sort list by class
     list.sort((a, b) => a.pair.compareTo(b.pair));
-    return list;
+    // Return schedule of group
+    scheduleOfGroup.pairs = list;
+    return scheduleOfGroup;
   }
+
+  ScheduleOfGroup getScheduleOnToday() => getScheduleOnDay(DateTime.now());
+
+  int getWeekNumberOnDay(DateTime datetime) {
+    // Move to the next week if it's weekend
+    if (datetime.weekday == 6) datetime = datetime.add(const Duration(days: 2));
+    if (datetime.weekday == 7) datetime = datetime.add(const Duration(days: 1));
+    // Find the difference between the start of current week and start of week when semester started
+    final weekstart = datetime.subtract(Duration(days: datetime.weekday));
+    final scheduleStart = schedule.semesterStart ?? DateTime.now();
+    final difference = weekstart.difference(
+        scheduleStart.subtract(Duration(days: scheduleStart.weekday)));
+    // Find if it's numerator or denominator
+    return difference.inDays ~/ 7;
+  }
+
+  int getWeekNumberOnToday() => getWeekNumberOnDay(DateTime.now());
 }
 
 class ScheduleLoading extends ScheduleState {}

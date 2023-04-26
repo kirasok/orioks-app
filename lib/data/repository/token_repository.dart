@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:orioks/constants.dart';
 import 'package:orioks/data/api/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/token.dart';
 
@@ -16,6 +18,12 @@ class TokenRepository {
   factory TokenRepository() => _instance;
 
   Future<Token> get({String? login, String? password}) async {
+    if ((await SharedPreferences.getInstance())
+            .getBool(Constants.demoModeKey) ??
+        false) {
+      return Token(Constants.demoModeKey);
+    }
+
     String? token = await _storage.read(key: _key);
     if (token != null) {
       return Token(token);
@@ -37,6 +45,11 @@ class TokenRepository {
       _storage.write(key: _key, value: token.token);
 
   Future<List<Token>> getAllTokens() async {
+    if ((await SharedPreferences.getInstance())
+            .getBool(Constants.demoModeKey) ??
+        false) {
+      return [Token(Constants.demoModeKey)];
+    }
     String response = await ApiService().fetchTokens();
     List<dynamic> json = jsonDecode(response);
     var tokens = List<Token>.from(json.map((e) => Token.fromJson(e)));

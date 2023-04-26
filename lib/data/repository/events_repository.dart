@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:orioks/constants.dart';
 
 import 'package:orioks/data/api/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/event.dart';
 
@@ -12,7 +15,15 @@ class EventsRepository {
   factory EventsRepository() => _instance;
 
   Future<List<Event>> get(int disciplineId) async {
-    String response = await ApiService().fetchEvents(disciplineId);
+    String response;
+    if ((await SharedPreferences.getInstance())
+            .getBool(Constants.demoModeKey) ??
+        false) {
+      response = await rootBundle
+          .loadString('templates/advanced/events/$disciplineId.json');
+    } else {
+      response = await ApiService().fetchEvents(disciplineId);
+    }
     List<dynamic> json = jsonDecode(response);
     var result = List<Event>.from(json.map((e) => Event.fromJson(e)));
     result.sort((a, b) => a.week.compareTo(b.week));
