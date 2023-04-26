@@ -2,15 +2,37 @@
 
 An unofficial orioks app
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+- [x] [Releases](https://github.com/kirasok/orioks-app/releases)
+- [ ] F-Droid
+- [ ] Play Market
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [x] View schedule
+- [x] View grades
+- [x] Demo mode for people without account
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Build
+
+### Android
+
+Follow steps to [sign your app](https://flutter.dev/docs/deployment/android#signing-the-app)
+
+#### Linux CLI
+
+Run:
+
+```shell script
+git clone https://github.com/kirillmokretsov/otp_storage.git
+cd otp_storage
+flutter pub get
+flutter build apk --no-tree-shake-icons
+```
+
+Now you can get apk in `build/app/outputs/flutter-apk/app-release.apk`
+
+## License
+
+Source code available under [GNU GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses).
