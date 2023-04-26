@@ -8,13 +8,6 @@ import 'ui/app.dart';
 
 // TODO: fetch resits using id of discipline https://gitlab.com/orioks/student-api/-/blob/master/docs/student/resits.rst
 
-// TODO: clean stream handling in cubits
-// TODO: refactor int, double, num
-// TODO: ensure consistency of variable's names
-
-// TODO: make icon for an app
-// TODO: check if design complies with material 3
-
 Future setDesktopWindow() async {
   await DesktopWindow.setMinWindowSize(const Size(400, 400));
 }
