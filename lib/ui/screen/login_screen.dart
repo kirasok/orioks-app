@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         child: ElevatedButton(
             onPressed: () => BlocProvider.of<LoginCubit>(context).enableDemo(),
-            child: const Text(AppLocalizations.of(context)!.demo)),
+            child: Text(AppLocalizations.of(context)!.demo)),
       ),
     );
   }
