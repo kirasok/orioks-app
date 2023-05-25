@@ -83,7 +83,7 @@ jobs:
       - name: install ninja gtk
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y ninja-build libgtk-3-dev libsecret
+          sudo apt-get install -y ninja-build libgtk-3-dev libsecret-1-0
 
       - name: Configure Flutter for Linux
         run: flutter config --enable-linux-desktop
