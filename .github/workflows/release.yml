@@ -52,7 +52,7 @@ jobs:
       - name: Update version in YAML
         run: |
           dart pub global activate cider
-          dart pub global run cider version $(echo ${{env.version}} | cut -c2-)+${{github.run_number}}
+          dart pub global run cider version ${{env.version}}+${{github.run_number}}
       - name: Get dependencies
         run: flutter pub get
       - name: Start Android Release Build
