@@ -150,3 +150,26 @@ jobs:
           body: ${{needs.changelog.outputs.changelog}}
           files: |
             ${{steps.download.outputs.download-path}}/**/*
+  build-web:
+    name: Create and Deploy Web Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Start Web Release Build
+        run: flutter build web --release --web-renderer auto --base-href /${{ github.event.repository.name }}/
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./build/web # The folder the action should deploy.
