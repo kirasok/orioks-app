@@ -16,9 +16,9 @@ class InternetCubit extends Cubit<InternetState> {
   late StreamSubscription connectivityStreamSubscription;
 
   InternetCubit({required this.connectivity}) : super(InternetLoading()) {
-    connectivity.checkConnectivity().then((value) => _emit(value));
+    connectivity.checkConnectivity().then((value) => _emit(value.last));
     connectivityStreamSubscription =
-        connectivity.onConnectivityChanged.listen((event) => _emit(event));
+        connectivity.onConnectivityChanged.listen((event) => _emit(event.last));
   }
 
   void _emit(ConnectivityResult event) {
