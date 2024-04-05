@@ -28,7 +28,7 @@ jobs:
           echo ${{github.run_number}}
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "prev-version=$PREV_VERSION" >> "$GITHUB_OUTPUT"
-          echo ${{github.run_number}} >> "$GITHUB_OUTPUT"
+          echo "build-number=${{github.run_number}}" >> "$GITHUB_OUTPUT"
   changelog:
     name: Generate changelog
     runs-on: ubuntu-latest
