@@ -5,21 +5,74 @@ on:
       - "*.*.*"
   workflow_dispatch:
 jobs:
-  build:
-    name: Build app
+  version:
+    name: Get version
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{steps.version-generator.outputs.version}}
+      prev-version: ${{steps.version-generator.outputs.prev-version}}
+      build-number: ${{steps.version-generator.outputs.build-number}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Hack around https://github.com/actions/checkout/issues/290
         run: |
           git fetch --tags --force
-      - name: get version
-        run: echo "version=$(git describe --tags)" >> $GITHUB_ENV
-      - name: get previous version
-        run: echo "prev=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))" >> $GITHUB_ENV
+      - name: Get version, prev version and build number
+        id: version-generator
+        shell: bash
+        run: |
+          VERSION="$(git describe --tags)"
+          PREV_VERSION="$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
+          echo "$VERSION"
+          echo "$PREV_VERSION"
+          echo ${{github.run_number}}
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "prev-version=$PREV_VERSION" >> "$GITHUB_OUTPUT"
+          echo ${{github.run_number}} >> "$GITHUB_OUTPUT"
+  changelog:
+    name: Generate changelog
+    runs-on: ubuntu-latest
+    needs: version
+    outputs:
+      changelog: ${{steps.changelog-generator.outputs.changelog}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Generate changelog
+        id: changelog-generator
+        run: |
+          dart pub global activate changelog_cli
+          echo "changelog=$(dart pub global run changelog_cli generate -P markdown -s ${{needs.version.outputs.prev-version}} -e ${{needs.version.outputs.version}})" > "$GITHUB_OUTPUT"
+  build-apk:
+    name: Build APK
+    runs-on: ubuntu-latest
+    needs: version
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Update version in YAML
+        run: |
+          dart pub global activate cider
+          dart pub global run cider version ${{needs.version.outputs.version}}+${{needs.version.outputs.build-number}}
       - name: Download Android keystore
         id: android_keystore
-        uses: timheuer/base64-to-file@v1.2.3
+        uses: timheuer/base64-to-file@v1.2.4
         with:
           fileName: keystore.jks
           encodedString: ${{ secrets.KEYSTORE_BASE64 }}
@@ -31,7 +84,26 @@ jobs:
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-      - uses: actions/setup-java@v3
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Start Android Release Build
+        run: flutter build apk
+      - name: Rename apk
+        shell: bash
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk io.github.kirasok.orioks.apk
+      - name: Upload Android Release
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-release
+          path: io.github.kirasok.orioks.apk
+  build-linux:
+    name: Build linux package
+    runs-on: ubuntu-latest
+    needs: version
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17"
@@ -40,28 +112,10 @@ jobs:
         with:
           channel: "stable"
           cache: true
-      - name: generate changelog
-        run: |
-          dart pub global activate changelog_cli
-          dart pub global run changelog_cli generate -P markdown -s ${{env.prev}} -e ${{env.version}} > CHANGELOG.md
-      - name: upload changelog
-        uses: actions/upload-artifact@v3
-        with:
-          name: changelog
-          path: CHANGELOG.md
       - name: Update version in YAML
         run: |
           dart pub global activate cider
-          dart pub global run cider version ${{env.version}}+${{github.run_number}}
-      - name: Get dependencies
-        run: flutter pub get
-      - name: Start Android Release Build
-        run: flutter build apk
-      - name: Upload Android Release
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          dart pub global run cider version ${{needs.version.outputs.version}}+${{needs.version.outputs.build-number}}
       - name: install packages
         run: |
           sudo apt-get update -y
@@ -73,31 +127,26 @@ jobs:
       - name: Zip Linux Release
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r linux-release.zip build/linux/x64/release/bundle
+          args: zip -qq -r io.github.kirasok.orioks.zip build/linux/x64/release/bundle
       - name: Upload Linux Release
         uses: actions/upload-artifact@v3
         with:
           name: linux-release
-          path: linux-release.zip
+          path: io.github.kirasok.orioks.zip
   deploy:
     name: Deploy Android Build
-    needs: build
+    needs: [build-apk, build-linux, changelog, version]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Get Android Build from artifacts
-        uses: actions/download-artifact@v3
+      - name: Get artifacts
+        id: download
+        uses: actions/download-artifact@v4
         with:
-          name: android-release
-      - name: Get Linux Build from artifacts
-        uses: actions/download-artifact@v3
+          merge-multiple: true
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v2.0.4
         with:
-          name: linux-release
-      - name: Get changelog
-        uses: actions/download-artifact@v3
-        with:
-          name: changelog
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: "app-release.apk,linux-release.zip"
-          bodyFile: "CHANGELOG.md"
+          tag_name: ${{ needs.version.outputs.version }}
+          body: ${{needs.changelog.outputs.changelog}}
+          files: |
+            ${{steps.download.outputs.download-path}}/**/*
