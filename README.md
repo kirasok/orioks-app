@@ -25,7 +25,7 @@ Follow steps to [sign your app](https://flutter.dev/docs/deployment/android#sign
 Run:
 
 ```shell script
-git clone https://github.com/kirillmokretsov/otp_storage.git
+git clone https://github.com/kirasok/orioks-app.git
 cd otp_storage
 flutter pub get
 flutter build apk --no-tree-shake-icons

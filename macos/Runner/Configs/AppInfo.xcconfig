@@ -8,7 +8,7 @@
 PRODUCT_NAME = orioks
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = io.github.kirillmokretsov.orioks.orioks
+PRODUCT_BUNDLE_IDENTIFIER = io.github.kirasok.orioks
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 io.github.kirillmokretsov.orioks. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 io.github.kirasok.orioks. All rights reserved.

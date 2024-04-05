@@ -1,4 +1,4 @@
-package io.github.kirillmokretsov.orioks.orioks
+package io.github.kirasok.orioks
 
 import io.flutter.embedding.android.FlutterActivity
 

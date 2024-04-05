@@ -13,7 +13,7 @@ void showAboutScreen(BuildContext context, PackageInfo packageInfo) {
     title: Text(packageInfo.appName),
     applicationName: packageInfo.appName,
     applicationVersion: packageInfo.version,
-    applicationLegalese: 'Copyright © Kirill Mokretsov, {{ year }}',
+    applicationLegalese: 'Copyright © Kira Sokolova, {{ year }}',
     applicationDescription: Center(
       child: Text(localizations!.description),
     ),
