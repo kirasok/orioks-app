@@ -53,7 +53,11 @@ jobs:
         run: dart pub global activate changelog_cli
       - name: Generate changelog
         id: changelog-generator
-        run: echo "changelog=$(dart pub global run changelog_cli generate -P markdown -s ${{needs.version.outputs.prev-version}} -e ${{needs.version.outputs.version}})" >> "$GITHUB_OUTPUT"
+        run: |
+          dart pub global run changelog_cli generate -P markdown -s ${{needs.version.outputs.prev-version}} -e ${{needs.version.outputs.version}} > CHANGELOG.md
+          CHANGELOG="$(cat CHANGELOG.md)"
+          echo "$CHANGELOG"
+          "changelog=$CHANGELOG" >> "$GITHUB_OUTPUT"
   build-apk:
     name: Build APK
     runs-on: ubuntu-latest
