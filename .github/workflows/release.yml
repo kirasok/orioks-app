@@ -37,6 +37,9 @@ jobs:
       changelog: ${{steps.changelog-generator.outputs.changelog}}
     steps:
       - uses: actions/checkout@v4
+      - name: Hack around https://github.com/actions/checkout/issues/290
+        run: |
+          git fetch --tags --force
       - uses: actions/setup-java@v4
         with:
           distribution: "temurin"
