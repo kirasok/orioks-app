@@ -78,6 +78,11 @@ flutter:
     - README.md
     - CHANGELOG.md
     - assets/
+    - assets/icon/
+    - assets/templates/
+    - assets/templates/basic/
+    - assets/templates/advanced/
+    - assets/templates/advanced/events/
 # An image asset can refer to one or more resolution-specific "variants", see
 # https://flutter.dev/assets-and-images/#resolution-aware
 

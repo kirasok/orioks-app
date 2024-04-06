@@ -18,7 +18,8 @@ class DisciplinesRepository {
     if ((await SharedPreferences.getInstance())
             .getBool(Constants.demoModeKey) ??
         false) {
-      json = await rootBundle.loadString('templates/basic/disciplines.json');
+      json = await rootBundle
+          .loadString('assets/templates/basic/disciplines.json');
     } else {
       json = await ApiService().fetchDisciplines();
     }

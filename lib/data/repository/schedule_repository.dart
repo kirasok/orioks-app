@@ -18,7 +18,8 @@ class ScheduleRepository {
     if ((await SharedPreferences.getInstance())
             .getBool(Constants.demoModeKey) ??
         false) {
-      json = await rootBundle.loadString('templates/basic/schedule.json');
+      json =
+          await rootBundle.loadString('assets/templates/basic/schedule.json');
     } else {
       json = await ApiService().fetchSchedule();
     }

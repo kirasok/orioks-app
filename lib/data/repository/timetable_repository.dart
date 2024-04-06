@@ -18,7 +18,8 @@ class TimetableRepository {
     if ((await SharedPreferences.getInstance())
             .getBool(Constants.demoModeKey) ??
         false) {
-      json = await rootBundle.loadString('templates/basic/timetable.json');
+      json =
+          await rootBundle.loadString('assets/templates/basic/timetable.json');
     } else {
       json = await ApiService().fetchTimetable();
     }

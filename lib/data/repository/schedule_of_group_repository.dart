@@ -21,7 +21,7 @@ class ScheduleOfGroupRepository {
             .getBool(Constants.demoModeKey) ??
         false) {
       json = await rootBundle
-          .loadString('templates/advanced/scheduleOfGroup.json');
+          .loadString('assets/templates/advanced/scheduleOfGroup.json');
     } else {
       json = await ApiService().fetchScheduleOfGroup(groupId);
     }

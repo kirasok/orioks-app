@@ -18,7 +18,7 @@ class StudentRepository {
     if ((await SharedPreferences.getInstance())
             .getBool(Constants.demoModeKey) ??
         false) {
-      json = await rootBundle.loadString('templates/basic/student.json');
+      json = await rootBundle.loadString('assets/templates/basic/student.json');
     } else {
       json = await ApiService().fetchStudent();
     }

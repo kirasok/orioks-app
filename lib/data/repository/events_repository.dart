@@ -20,7 +20,7 @@ class EventsRepository {
             .getBool(Constants.demoModeKey) ??
         false) {
       response = await rootBundle
-          .loadString('templates/advanced/events/$disciplineId.json');
+          .loadString('assets/templates/advanced/events/$disciplineId.json');
     } else {
       response = await ApiService().fetchEvents(disciplineId);
     }

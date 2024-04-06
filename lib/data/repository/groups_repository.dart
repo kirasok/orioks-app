@@ -18,7 +18,7 @@ class GroupsRepository {
     if ((await SharedPreferences.getInstance())
             .getBool(Constants.demoModeKey) ??
         false) {
-      json = await rootBundle.loadString('templates/basic/groups.json');
+      json = await rootBundle.loadString('assets/templates/basic/groups.json');
     } else {
       json = await ApiService().fetchGroups();
     }
