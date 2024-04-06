@@ -104816,7 +104816,7 @@ m=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/basic/disciplines.json"),$async$cD)
+return A.y($.kA().o_("assets/templates/basic/disciplines.json"),$async$cD)
 case 7:s=5
 break
 case 6:s=8
@@ -104845,7 +104845,7 @@ l=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/advanced/events/"+b+".json"),$async$bl)
+return A.y($.kA().o_("assets/templates/advanced/events/"+b+".json"),$async$bl)
 case 7:s=5
 break
 case 6:s=8
@@ -104879,7 +104879,7 @@ m=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/basic/groups.json"),$async$cD)
+return A.y($.kA().o_("assets/templates/basic/groups.json"),$async$cD)
 case 7:s=5
 break
 case 6:s=8
@@ -104909,7 +104909,7 @@ l=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/advanced/scheduleOfGroup.json"),$async$bl)
+return A.y($.kA().o_("assets/templates/advanced/scheduleOfGroup.json"),$async$bl)
 case 7:s=5
 break
 case 6:s=8
@@ -104937,7 +104937,7 @@ l=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/basic/schedule.json"),$async$cD)
+return A.y($.kA().o_("assets/templates/basic/schedule.json"),$async$cD)
 case 7:s=5
 break
 case 6:s=8
@@ -104965,7 +104965,7 @@ i=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/basic/student.json"),$async$cD)
+return A.y($.kA().o_("assets/templates/basic/student.json"),$async$cD)
 case 7:s=5
 break
 case 6:s=8
@@ -104995,7 +104995,7 @@ n=B.b1
 s=p===!0?4:6
 break
 case 4:s=7
-return A.y($.kA().o_("templates/basic/timetable.json"),$async$cD)
+return A.y($.kA().o_("assets/templates/basic/timetable.json"),$async$cD)
 case 7:s=5
 break
 case 6:s=8
