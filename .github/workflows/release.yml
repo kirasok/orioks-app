@@ -96,7 +96,7 @@ jobs:
         run: |
           mv build/app/outputs/flutter-apk/app-release.apk io.github.kirasok.orioks.apk
       - name: Upload Android Release
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-release
           path: io.github.kirasok.orioks.apk
@@ -132,7 +132,7 @@ jobs:
         with:
           args: zip -qq -r io.github.kirasok.orioks.zip build/linux/x64/release/bundle
       - name: Upload Linux Release
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-release
           path: io.github.kirasok.orioks.zip
